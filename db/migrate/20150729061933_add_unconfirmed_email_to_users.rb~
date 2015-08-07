@@ -1,0 +1,5 @@
+class AddUnconfirmedEmailToUsers < ActiveRecord::Migration
+  def change
+	t.string   :unconfirmed_email
+  end
+end
