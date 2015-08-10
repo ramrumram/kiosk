@@ -1,6 +1,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
+ prepend_before_filter :authenticate_scope!, :only => [:change_password]
+
 
   # GET /resource/sign_up
   # def new
@@ -57,20 +59,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+
 protected
 
   def update_resource(resource, params)
     resource.update_without_password(params)
   end
 
-  def update_password
-    @user = User.find(current_user.id)
-    if @user.update(user_params)
-      # Sign in the user by passing validation in case their password changed
-      sign_in @user, :bypass => true
-      redirect_to root_path
-    else
-      render "edit"
-    end
-  end
+
 end

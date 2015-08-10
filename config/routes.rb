@@ -63,5 +63,13 @@ Rails.application.routes.draw do
   
   devise_scope :user do
     root to: "devise/registrations#edit"
+ 
   end
+  
+  resource :user, only: [:edit] do
+  collection do
+    patch 'update_password'
+  end
+end
+
 end

@@ -12,6 +12,15 @@
             
             </div>
 
+
+ <% if @user.errors.any? %>
+
+         
+    <% @user.errors.full_messages.each do |msg| %>
+      <div class="alert alert-danger" role="alert"><%= msg %></div>
+    <% end %>
+
+<% end %>
             <div class="brand inline">
               <!--
 <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
@@ -124,8 +133,7 @@
                         <%= f.text_field :username, :placeholder => "mychurch123", :class => "form-control", :disabled => true%>
                           
                           <small>
-                          <%= link_to 'Change Password', "#myModal", {  'data-toggle' =>  "modal", 'data-target' => "#myModal", 'data-type' => "html" } %>
-                          
+                          <%= link_to "Change Password",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>
                           
                           </small>
                         </div>
@@ -195,65 +203,13 @@
           <!-- END CONTAINER FLUID -->
         </div>
         <!-- END PAGE CONTENT -->      
+             
             
       
       
-      
-                            <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Change Password</h4>
-      </div>
-      <div class="modal-body">
-       
-         <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label>Current Password</label>
-              <div class="controls">
-        
-		    <%= f.password_field :current_password, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
+<div id="product-modal" class="modal fade">
 
-              </div>
-            </div>
-         <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label>Password</label>
-              <div class="controls">
-        
-		    <%= f.password_field :password, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
-
-              </div>
-            </div>
-             <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label>Password Confirmation</label>
-              <div class="controls">
-        
-		    <%= f.password_field :password_confirmation, autocomplete: "off", :placeholder => "", :class => "form-control",:required => true %>
-
-              </div>
-            </div>
-           
-       <%= f.submit "Save", :class => "btn btn-primary btn-cons m-t-10 pull-left" %>
-         
-    
-  
-  
-       
-             </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-<% end %>
-  </div>
 </div>
-      
       
         <!-- START FOOTER -->
         <div class="container-fluid container-fixed-lg footer">
@@ -277,17 +233,3 @@
       <!-- END PAGE CONTENT WRAPPER -->
     </div>
     <!-- END PAGE CONTAINER -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
