@@ -70,6 +70,10 @@ Rails.application.routes.draw do
   collection do
     patch 'update_password'
   end
-end
+  
+  end
+
+resources :churches
+   
 
 end

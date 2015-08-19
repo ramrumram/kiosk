@@ -9,3 +9,13 @@ $ ->
     $('.modal-body-content').empty()
   $(document).on 'click', '#ajax-modal', (e) ->
     e.stopPropagation();
+    #price change on wizard
+  $('#pricegroup .btn').on 'click', ->
+    $amt = parseFloat($(this).find('input[type="radio"]').val())
+    $amt += 0.30  
+    $amt = $amt.toFixed(2)
+    $('#amount').val($amt)
+    $('#display_amt').html($amt)
+ 
+   
+  

@@ -13,14 +13,7 @@
             </div>
 
 
- <% if @user.errors.any? %>
 
-         
-    <% @user.errors.full_messages.each do |msg| %>
-      <div class="alert alert-danger" role="alert"><%= msg %></div>
-    <% end %>
-
-<% end %>
             <div class="brand inline">
               <!--
 <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
@@ -50,56 +43,23 @@
       <!-- END HEADER -->
     </div>    
   <!-- Modal -->
-   <!--
- <div class="modal fade slide-up disable-scroll" id="modalSlideUp" tabindex="-1" role="dialog" aria-hidden="false">
-      <div class="modal-dialog ">
-        <div class="modal-content-wrapper">
-          <div class="modal-content">
-            <div class="modal-header clearfix text-left">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
-              </button>
-              <h5>Email Receipt</h5>
-              <p class="p-b-10">Please enter your email address for a receipt.</p>
-            </div>
-            <div class="modal-body">
-              <form role="form">
-                <div class="form-group-attached">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="form-group form-group-default">
-                        <label>Email Address</label>
-                        <input type="email" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-                  
-                </div>
-              </form>
-              <div class="row">
 
-                <div class="col-sm-10 m-t-10 sm-m-t-10">
-                  <button type="button" class="btn btn-danger m-t-5" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary m-t-5">Send Receipt Now</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>   
--->
 
     
     <!-- START PAGE CONTENT WRAPPER -->
       <div class="page-content-wrapper">
         <!-- START PAGE CONTENT -->
-<%= devise_error_messages! %>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
           <!-- START CONTAINER FLUID -->
           <div class="container-fluid container-fixed-lg bg-white">
+   
+
+         
+   
+
             <!-- START PANEL -->
             <div class="panel panel-transparent">
               <div class="panel-heading">
@@ -111,10 +71,11 @@
                     <p>Please complete all fields. The setup of your Stripe account is required, this is what processes the credit card payments. They are only 2.9% plus $0.30 per transaction. We have chosen to use them as the payment processor because of their flat rate pricing, no credit card reader required, great customer support and quick funding.
                     </p>
                     <br>
-                    
+					<%= devise_error_messages! %>
+
                     <p class="small hint-text">Please provide the contact information of whomever is authorized to accept these funds.</p>
                     
-                    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
+                    <%= form_for(setup_user(resource), as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
                                         
                       <div class="form-group">
                         <label for="fname" class="col-sm-3 control-label">First & Last Name</label>
@@ -154,8 +115,11 @@
                       <div class="form-group">
                         <label for="fname" class="col-sm-3 control-label">Title of Donation Form</label>
                         <div class="col-sm-9">
-                        <%= f.text_field :donation_form_title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 20, :required => true%>
-                          
+                        <%= f.fields_for :church do |ff| %>
+                        	<%= ff.text_field :title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 20, :required => true%>
+                        	<%= preview_link(resource) %>
+                        	  
+                        <% end %>  
                         </div>
                       </div>
                       <div class="form-group">
