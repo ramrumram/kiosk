@@ -7,8 +7,6 @@ class ChurchMailer < ActionMailer::Base
 #  logger.info "#{email} #{subject} #{content}"
   
   email =  email.split(',')
-  logger.info "####################################################"
-  logger.info email.inspect
   
   mail(to: email,
          body: content,
