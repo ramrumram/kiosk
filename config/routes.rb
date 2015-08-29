@@ -73,7 +73,11 @@ Rails.application.routes.draw do
   
   end
 
-resources :churches
-   
+resources :churches do
+ collection do
+    get 'invite/:id' => 'churches#invite', as: :invite
+    post 'invite/:id' => 'churches#invite'
+  end
+ end  
 
 end

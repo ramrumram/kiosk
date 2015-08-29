@@ -117,7 +117,7 @@
                         <div class="col-sm-9">
                         <%= f.fields_for :church do |ff| %>
                         	<%= ff.text_field :title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 20, :required => true%>
-                        	<%= preview_link(resource) %>
+                        	<%= preview_link(resource) %> <%= invite_link(resource) %>
                         	  
                         <% end %>  
                         </div>
