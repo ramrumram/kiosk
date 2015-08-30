@@ -60,6 +60,9 @@
               <div class="col-md-6 text-right">
                 <a href="#" class="text-info small">Help? Contact Support</a>
               </div>
+              <div class="col-md-6 text-right">
+                <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+              </div>
             </div>
             <!-- END Form Control-->
              <%= f.submit "Sign in", :class => "btn btn-primary btn-cons m-t-10 pull-left" %>

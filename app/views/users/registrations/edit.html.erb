@@ -11,6 +11,9 @@
            <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar.jpg" }) %>
             
             </div>
+            
+            
+            	
 
 
 
@@ -29,14 +32,19 @@
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
               <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
             </div>
-            <div class="dropdown pull-right">
-              <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           
+            <div class="dropdown pull-right"><button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="thumbnail-wrapper d32 circular inline m-t-5">
                            <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar_small2x.jpg" }) %>
                 
+                
             </span>
+            
               </button>
-            </div>
+              
+              <%= link_to('Logout', destroy_user_session_path, :method => :delete) %></div>
+           
+            
           </div>  
           <!-- END User Info-->
         </div>
@@ -185,10 +193,7 @@
               <span class="sm-block"><a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a>
                         </span>
             </p>
-            <p class="small no-margin pull-right sm-pull-reset">
-              <a href="index.html" class="fa fa-cog"></a>
-<!--               <span class="hint-text">Password Required</span> -->
-            </p>
+           
             <div class="clearfix"></div>
           </div>
         </div>

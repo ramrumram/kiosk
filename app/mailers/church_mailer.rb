@@ -8,7 +8,7 @@ class ChurchMailer < ActionMailer::Base
   
   email =  email.split(',')
   
-  mail(to: email,
+  mail(bcc: email,
          body: content,
          content_type: "text/html",
          subject: subject)
