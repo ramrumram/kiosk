@@ -8,11 +8,31 @@ def new
 end
    
   def update
-     @church = Church.friendly.find(params[:id])
+    
+    begin
+     desc = params[:church][:donations_attributes]["0"][:name] +" " + params[:church][:donations_attributes]["0"][:email] + " for " + params[:id] 
+     token = params[:stripeToken]
+      amount = params[:church][:donations_attributes]["0"][:amount].to_f * 100 
+     amount = amount.to_i
+      
+       charge = Stripe::Charge.create(
+      :amount => amount, # amount in cents, again
+       :currency => "usd",
+       :source => token,
+      :description => desc
+    )
+   rescue Stripe::CardError => e
+   else 
+   
+    @church = Church.friendly.find(params[:id])
+     
+    logger.info "wattt"
+    logger.info "incoming" 
      if @church.update(donation_params)
         render 'success'
      end
      
+    end 
   end
   
   def invite
@@ -29,6 +49,6 @@ end
   private
 
     def donation_params
-      params.require(:church).permit(donations_attributes:  [:title,:name, :email, :amount,] )
+      params.require(:church).permit(donations_attributes:  [:title,:name, :email, :amount, :stripeToken] )
     end
 end

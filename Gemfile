@@ -47,6 +47,8 @@ gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.
 
 gem 'bootstrap-wysihtml5-rails'
 
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+
 group :development do
   gem 'rails_layout'
 end

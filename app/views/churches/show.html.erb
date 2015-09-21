@@ -1,3 +1,11 @@
+<% content_for(:header) do %>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  // This identifies your website in the createToken call below
+  Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
+  // ...
+</script>
+<% end %>
 <!-- START PAGE-CONTAINER -->
     <div class="page-container">
       <!-- START PAGE HEADER WRAPPER -->
@@ -42,10 +50,6 @@
 
     <!-- START PAGE-CONTAINER -->
     <div class="page-container pull-left">
-
-      
-      
-      
       
         <%= form_for(@church ,url: church_path(@church),  html: { method: :put  },:id => 'donation_form') do |f| %>
       	<%= f.fields_for :donations, Donation.new  do |d| %>
@@ -131,12 +135,7 @@
                   </div>
                 </div>
                 
-                
-                
-            
-                
-                
-                
+ 
                 
                 <div class="tab-pane slide-left padding-20" id="tab2">
                   <div class="row row-same-height">
@@ -144,10 +143,9 @@
                     <div class="col-md-12">
                       <div class="padding-0">
 
-                        <form role="form">
                           <div class="b-rad-lg">
 							
-                            <h3 class="pull-left no-margin">$<span id="display_amt">10.30</span> charge to your card.</h3><br>
+                            <h3 class="pull-left no-margin">$<span id="display_amt">5.30</span> charge to your card.</h3><br>
                             <small class="pull-left no-margin hint-text">$0.30 fee added to support donation software.</small>
                             <ul class="list-unstyled pull-right list-inline no-margin">
                               <li>
@@ -157,7 +155,7 @@
 
                             </ul>
                             <div class="clearfix"></div>
-                            <%= d.hidden_field :amount, :id => "amount" %>
+                            <%= d.hidden_field :amount, :id => "amount", :value => 5.30 %>
                             <div class="form-group form-group-default required m-t-25">
                               <label>Card holder's name</label>
                               
@@ -166,31 +164,35 @@
                             </div>
                             <div class="form-group form-group-default required">
                               <label>Card number</label>
-                              <input type="text" pattern="\d*" class="form-control" placeholder="8888-8888-8888-8888" required>
+                              <input type="text"  data-stripe="number" pattern="\d*" class="form-control" placeholder="8888-8888-8888-8888" value="4000000000000077" required>
                             </div>
+                            
+                           <div class="form-group form-group-default required">
+                           <label>CVC</label>
+						      <input type="text" size="4" class="form-control" value="120" data-stripe="cvc"/>
+  							</div>
+  							
                             <div class="row">
                              <div class="form-group">
 
                               <div class="col-md-4">
                                 <label>Expiration Date</label>
                                 <br>
-                                <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
-                                  <option selected>Jan (01)</option>
-                                  <option>Feb (02)</option>
-                                  <option>Mar (03)</option>
-                                  <option>Apr (04)</option>
-                                  <option>May (05)</option>
-                                  <option>Jun (06)</option>
-                                  <option>Jul (07)</option>
-                                  <option>Aug (08)</option>
-                                  <option>Sep (09)</option>
-                                  <option>Oct (10)</option>
-                                  <option>Nov (11)</option>
-                                  <option>Dec (12)</option>
+                                <select class="cs-select cs-skin-slide" data-init-plugin="cs-select"  data-stripe="exp-month"> 
+                                  <option value="01" selected>Jan (01)</option>
+                                  <option value="02">Feb (02)</option>
+                                  <option value="03">Mar (03)</option>
+                                  <option value="04">Apr (04)</option>
+                                  <option value="05">May (05)</option>
+                                  <option value="06">Jun (06)</option>
+                                  <option value="07">Jul (07)</option>
+                                  <option value="08">Aug (08)</option>
+                                  <option value="09">Sep (09)</option>
+                                  <option value="10">Oct (10)</option>
+                                  <option value="11">Nov (11)</option>
+                                  <option value="12">Dec (12)</option>
                                 </select>
-                                <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
-                                  <option value="2014">2014</option>
-                                  <option value="2015">2015</option>
+                                <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" data-stripe="exp-year">
                                   <option value="2016">2016</option>
                                   <option value="2017">2017</option>
                                   <option value="2018">2018</option>
@@ -205,7 +207,9 @@
                                   <option value="2027">2027</option>
                                   <option value="2028">2028</option>
                                   <option value="2029">2029</option>
-                                  <option value="2030">2030</option>
+                                  <option value="2030">2030</option>                                  
+                                  <option value="2031">2031</option>
+                                  <option value="2032">2032</option>
                                 </select>
                               </div>
                               <div class="col-md-8">
@@ -215,7 +219,6 @@
                              </div>
                             </div>
                           </div>
-                        </form>
                       </div>
                     </div>
                   </div>
@@ -230,6 +233,9 @@
 				</div>
                 </div>
                 
+                
+                <div class="payment-errors alert alert-error hide">
+                </div>
                 
                 
                 
@@ -248,7 +254,7 @@
                       </button>
                     </li>
                        <li class="next finish hidden">
-                           <%= d.submit "Submit", :class => "btn btn-primary btn-cons pull-right" %>
+                           <%= d.submit "All Done", :class => "btn btn-primary btn-cons pull-right", :id => "commit"  %>
                       
                     </li>
                     <li class="previous">
