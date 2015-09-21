@@ -34,11 +34,10 @@ stripeResponseHandler = (status,response)->
 
 
   $form = $(".edit_church")
-  console.log(response)
   if response.error 
     # Show the errors on the form
     $form.find('.payment-errors').text(response.error.message).removeClass('hide');
-   
+    $form.find('#commit').prop('disabled', false);
     return false;
   else 
     # response contains id and card, which contains additional card details
