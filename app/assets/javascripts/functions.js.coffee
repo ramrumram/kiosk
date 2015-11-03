@@ -17,7 +17,15 @@ $ ->
       
       Stripe.card.createToken($form, stripeResponseHandler);
       return false;
-
+  #if the price wizard is hidden in small devices use select box
+  $('select.cs-select').on 'change', ->
+    $amt = parseFloat($(this).val())
+    $amt += 0.30  
+    $amt = $amt.toFixed(2)
+    $('#amount').val($amt)
+    $('#display_amt').html($amt)
+  
+  #for bigger screen price wizard is availbale
   $('#pricegroup .btn').on 'click', ->
     $amt = parseFloat($(this).find('input[type="radio"]').val())
     $amt += 0.30  
@@ -25,6 +33,8 @@ $ ->
     $('#amount').val($amt)
     $('#display_amt').html($amt)
  
+      
+    
   $('.wysihtml5').each ->
         $(this).wysihtml5();
        

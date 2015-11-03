@@ -26,7 +26,7 @@ end
    
     @church = Church.friendly.find(params[:id])
      
-    logger.info "wattt"
+   
     logger.info "incoming" 
      if @church.update(donation_params)
         render 'success'

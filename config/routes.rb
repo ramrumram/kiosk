@@ -62,8 +62,8 @@ Rails.application.routes.draw do
   #   end
   
   devise_scope :user do
-    root to: "devise/registrations#edit"
- 
+    
+ root to: "devise/registrations#edit"
   end
   
   resource :user, only: [:edit] do
@@ -79,5 +79,7 @@ resources :churches do
     post 'invite/:id' => 'churches#invite'
   end
  end  
+
+
 
 end
