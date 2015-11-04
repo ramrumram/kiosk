@@ -28,7 +28,7 @@ $ ->
       }, stripeResponseHandler);
       return false;
   #if the price wizard is hidden in small devices use select box
-  $('select.cs-select').on 'change', ->
+  $('select.cs-amount').on 'change', ->
     $amt = parseFloat($(this).val())
     $amt += 0.30  
     $amt = $amt.toFixed(2)
