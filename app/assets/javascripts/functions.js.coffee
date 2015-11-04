@@ -12,10 +12,20 @@ $ ->
     #price change on wizard
   $("#commit").on 'click', ->
       $form = $(".edit_church")
-    
+      $cvc = $("#cvc").val()
+      $exp_mn = $("#exp_mn").val()
+      $exp_yr = $("#exp_yr").val()
+      $number = $("#number").val()
+      $cust_name = $(".cust_name").val()
       $(this).prop('disabled', true);
       
-      Stripe.card.createToken($form, stripeResponseHandler);
+      Stripe.card.createToken({
+        number: $number,
+        cvc: $cvc,
+        exp_month: $exp_mn,
+        exp_year: $exp_yr,
+        name: $cust_name
+      }, stripeResponseHandler);
       return false;
   #if the price wizard is hidden in small devices use select box
   $('select.cs-select').on 'change', ->

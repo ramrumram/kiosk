@@ -10,16 +10,19 @@ end
   def update
     
     begin
-     desc = params[:church][:donations_attributes]["0"][:name] +" " + params[:church][:donations_attributes]["0"][:email] + " for " + params[:id] 
+     desc = "Donation to  " + params[:id] 
      token = params[:stripeToken]
       amount = params[:church][:donations_attributes]["0"][:amount].to_f * 100 
      amount = amount.to_i
-      
+      email = params[:church][:donations_attributes]["0"][:email]
+     stripe_params = { :description => desc, :amount => amount, :currency => "usd", :source => token }
+     if !email.blank?
+        stripe_params[:receipt_email] = email  
+     end
+       # => email,
        charge = Stripe::Charge.create(
-      :amount => amount, # amount in cents, again
-       :currency => "usd",
-       :source => token,
-      :description => desc
+       # amount in cents, again
+       stripe_params
     )
    rescue Stripe::CardError => e
    else 
