@@ -2,7 +2,7 @@
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
   // This identifies your website in the createToken call below
-  Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
+   Stripe.setPublishableKey('<%= @user.publishable_key %>');
   // ...
 </script>
 <% end %>
@@ -52,6 +52,7 @@
     <div class="page-container pull-left">
       
         <%= form_for(@church ,url: church_path(@church),  html: { method: :put  },:id => 'donation_form') do |f| %>
+        <%= f.hidden_field :stripe_uid, :value => @user.uid %>
       	<%= f.fields_for :donations, Donation.new  do |d| %>
 
            <!-- START PAGE CONTENT WRAPPER -->
@@ -155,11 +156,12 @@
                             </ul>
                             <div class="clearfix"></div>
                             <%= d.hidden_field :amount, :id => "amount", :value => 5.30 %>
+                            
                             <div class="form-group form-group-default required m-t-25">
                               <label>Card holder's name</label>
                               
                               <%= d.text_field :name, :placeholder => "Name on the card", :class => "form-control cust_name", :required => true%>
-                              
+                                
                             </div>
                             <div class="form-group form-group-default required">
                               <label>Card number</label>
@@ -253,8 +255,14 @@
                       </button>
                     </li>
                        <li class="next finish hidden">
-                           <%= d.submit "All Done", :class => "btn btn-primary btn-cons pull-right", :id => "commit"  %>
-                      
+                       <% if (@user.uid && @user.publishable_key) %>    
+                            	<%= d.submit "All Done", :class => "btn btn-primary btn-cons pull-right", :id => "commit" %>
+                            	  
+                      	<%	else %>
+                      			<b class="alert alert-warning"> Cannot Proceed. Payment integration is not done yet.</b>
+                      	<%		
+                      		end
+                      			%>
                     </li>
                     <li class="previous">
                       <button class="btn btn-default btn-cons pull-right" type="button">

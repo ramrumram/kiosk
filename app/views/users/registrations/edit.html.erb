@@ -139,18 +139,21 @@
                       <div class="form-group">
                         <label class="col-sm-3 control-label">Stripe Payments</label>
                         <div class="col-sm-9">
-                          <p>Please enter your Stripe Live Secret Key & Stripe Live Publish Key.</p>
-                          <p class="hint-text small">If you do not yet have a Stripe account, <a href="#" target="_blank">please click</a> here to create one, it is free. Copy and paste into the below fields.</p>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <%= f.text_field :stripe_pub_key, :placeholder => "Stripe Live Publish Key", :class => "form-control"%>
-                              
-                            </div>
-                            <div class="col-sm-6 sm-m-t-10">
-                            <%= f.text_field :secret_key, :placeholder => "Stripe Live Secret Key", :class => "form-control"%>
-                              
-                            </div>
-                          </div>
+                      
+                          <p>
+
+						<% if (f.object.uid && f.object.publishable_key)%>
+						<b class="alert alert-success"> Stripe account connected</b>
+						<% else %>
+						<%= link_to image_tag('stripe.png'), user_omniauth_authorize_path(:stripe_connect) %>
+						<%= link_to 'https://stripe.com', class: '',  title: 'Donations made will be sent to your Stripe account.', 'data-toggle' => 'tooltip', 'data-placement' => 'right' do %>
+  <span class="glyphicon glyphicon-question-sign"></span><% end %>
+						<% end %>	
+    					</p>
+												
+                                           
+                          
+                         
                         </div>
                       </div>
                                            

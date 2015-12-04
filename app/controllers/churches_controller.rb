@@ -1,6 +1,8 @@
 class ChurchesController < ApplicationController
    def show
       @church = Church.friendly.find(params[:id])
+      @user = User.find(@church.user_id)    
+          
    end
    
 def new
@@ -8,33 +10,35 @@ def new
 end
    
   def update
-    
     begin
      desc = "Donation to  " + params[:id] 
      token = params[:stripeToken]
-      amount = params[:church][:donations_attributes]["0"][:amount].to_f * 100 
+     amount = params[:church][:donations_attributes]["0"][:amount].to_f * 100 
+     stripe_uid = params[:church][:stripe_uid]
+      
      amount = amount.to_i
-      email = params[:church][:donations_attributes]["0"][:email]
-     stripe_params = { :description => desc, :amount => amount, :currency => "usd", :source => token }
+     email = params[:church][:donations_attributes]["0"][:email]
+      
      if !email.blank?
         stripe_params[:receipt_email] = email  
      end
+     Stripe.api_key = Rails.application.secrets.secret_key
        # => email,
-       charge = Stripe::Charge.create(
-       # amount in cents, again
-       stripe_params
-    )
+     charge = Stripe::Charge.create( {
+       :amount => amount,
+      :currency => "usd", 
+      :source => token,
+      :description => desc,
+      :application_fee => 30
+      
+     },{:stripe_account => stripe_uid})
    rescue Stripe::CardError => e
    else 
    
     @church = Church.friendly.find(params[:id])
-     
-   
-    logger.info "incoming" 
-     if @church.update(donation_params)
+    if @church.update(donation_params)
         render 'success'
-     end
-     
+    end
     end 
   end
   
@@ -52,6 +56,6 @@ end
   private
 
     def donation_params
-      params.require(:church).permit(donations_attributes:  [:title,:name, :email, :amount, :stripeToken] )
+      params.require(:church).permit(donations_attributes:  [:title,:name, :email, :amount, :stripeToken, :stripe_uid] )
     end
 end

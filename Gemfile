@@ -49,6 +49,8 @@ gem 'bootstrap-wysihtml5-rails'
 
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
+gem 'omniauth-stripe-connect'
+
 group :development do
   gem 'rails_layout'
 end
