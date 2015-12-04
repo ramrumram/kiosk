@@ -19,19 +19,21 @@ end
      amount = amount.to_i
      email = params[:church][:donations_attributes]["0"][:email]
       
+      stripe_params = {
+       :amount => amount,
+      :currency => "usd", 
+      :source => token,
+      :description => desc,
+      :application_fee => 30,
+     
+      
+     }
      if !email.blank?
         stripe_params[:receipt_email] = email  
      end
      Stripe.api_key = Rails.application.secrets.secret_key
        # => email,
-     charge = Stripe::Charge.create( {
-       :amount => amount,
-      :currency => "usd", 
-      :source => token,
-      :description => desc,
-      :application_fee => 30
-      
-     },{:stripe_account => stripe_uid})
+     charge = Stripe::Charge.create(stripe_params ,{:stripe_account => stripe_uid})
    rescue Stripe::CardError => e
    else 
    
