@@ -10,10 +10,10 @@
     <div class="page-container">
       <!-- START PAGE HEADER WRAPPER -->
       <!-- START HEADER -->
-      <div class="header  hidden-xs">          
+      <div class="header  hidden-xs">
         <div class=" pull-left sm-table">
           <div class="header-inner">
-          
+
           <div class="pull-right hidden-lg hidden-md p-t-10">
             <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar.jpg" }) %>
             </div>
@@ -22,10 +22,10 @@
             <div class="brand inline">
               <!--
 <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
-             
+
 -->
-            </div> 
-            
+            </div>
+
           </div>
         </div>
         <div class=" pull-right">
@@ -41,16 +41,16 @@
             </span>
               </button>
             </div>
-          </div>  
+          </div>
           <!-- END User Info-->
         </div>
       <!-- END HEADER -->
-    </div>    
+    </div>
 
 
     <!-- START PAGE-CONTAINER -->
     <div class="page-container pull-left">
-      
+
         <%= form_for(@church ,url: church_path(@church),  html: { method: :put  },:id => 'donation_form') do |f| %>
         <%= f.hidden_field :stripe_uid, :value => @user.uid %>
       	<%= f.fields_for :donations, Donation.new  do |d| %>
@@ -80,7 +80,7 @@
                   <div class="row row-same-height">
                     <div class="col-md-12">
                       <div class="padding-30">
-                        
+
                         <h5><strong>Welcome to our<span class="hidden-xs"> self serve</span> donation kiosk.</strong></h5>
                         <div class="row">
                           <div class="col-lg-5 col-md-6">
@@ -109,7 +109,7 @@
                               </label>
                         </div>
                           </div>
-                          
+
                           <div class="visible-xs col-lg-7 col-md-6">
                           <br>
                             <div class="btn-group pull-right" data-toggle="buttons">
@@ -123,9 +123,9 @@
                                   <option value="250">$250</option>
 
                                 </select>
-                              
-                              
-                              
+
+
+
                                                           </div>
                           </div>
                         </div>
@@ -134,9 +134,9 @@
                     </div>
                   </div>
                 </div>
-                
- 
-                
+
+
+
                 <div class="tab-pane slide-left padding-20" id="tab2">
                   <div class="row row-same-height">
 
@@ -144,48 +144,48 @@
                       <div class="padding-0">
 
                           <div class="b-rad-lg">
-							
+
                             <h3 class="pull-left no-margin">$<span id="display_amt">5.30</span> charge to your card.</h3><br>
                             <small class="pull-left no-margin hint-text">$0.30 fee added to support donation software.</small>
                             <ul class="list-unstyled pull-right list-inline no-margin">
                               <li>
                                 <%= image_tag("cards.png", :alt => "", :class => "brand hidden-xs", :size => "274x30",  data: { src: "cards.png", src_retina: "cards.png" }) %>
-                                
+
                               </li>
 
                             </ul>
                             <div class="clearfix"></div>
                             <%= d.hidden_field :amount, :id => "amount", :value => 5.30 %>
-                            
+
                             <div class="form-group form-group-default required m-t-25">
                               <label>Card holder's name</label>
-                              
+
                               <%= d.text_field :name, :placeholder => "Name on the card", :class => "form-control cust_name", :required => true%>
-                                
+
                             </div>
                             <div class="form-group form-group-default required">
                               <label>Card number</label>
                               <input type="text" id="number" data-stripe="number" pattern="\d*" class="form-control" placeholder="8888-8888-8888-8888" value="4000000000000077" required>
                             </div>
-                            
+
                            <div class="form-group form-group-default required">
                            <label>CVC</label>
 						      <input type="text" id="cvc" size="4" class="form-control" value="120" data-stripe="cvc"/>
   							</div>
-  							
+
                             <div class="row">
                              <div class="form-group">
 
                               <div class="col-md-4">
                                 <label>Expiration Date</label>
                                 <br>
-                                <select id="exp_mn" class="cs-select cs-skin-slide" data-init-plugin="cs-select"  data-stripe="exp-month"> 
-                                  <option value="01" selected>Jan (01)</option>
+                                <select id="exp_mn" class="cs-select cs-skin-slide" data-init-plugin="cs-select"  data-stripe="exp-month">
+                                  <option value="01" >Jan (01)</option>
                                   <option value="02">Feb (02)</option>
                                   <option value="03">Mar (03)</option>
                                   <option value="04">Apr (04)</option>
                                   <option value="05">May (05)</option>
-                                  <option value="06">Jun (06)</option>
+                                  <option value="06" selected>Jun (06)</option>
                                   <option value="07">Jul (07)</option>
                                   <option value="08">Aug (08)</option>
                                   <option value="09">Sep (09)</option>
@@ -208,7 +208,7 @@
                                   <option value="2027">2027</option>
                                   <option value="2028">2028</option>
                                   <option value="2029">2029</option>
-                                  <option value="2030">2030</option>                                  
+                                  <option value="2030">2030</option>
                                   <option value="2031">2031</option>
                                   <option value="2032">2032</option>
                                 </select>
@@ -225,28 +225,29 @@
                   </div>
                 </div>
                 <div class="tab-pane slide-left padding-20" id="tab3">
-					
+
 					<p class="small">Your payment will be processed now.</p>
                     <p class="small">Your credit card statement will show "Stripe" as your donation description.</p>
-                    
+
 
 
 				</div>
                 </div>
-                
-                
+
+
                 <div class="payment-errors alert alert-error hide">
                 </div>
-                
-                
-                
-                
+
+                <div id="ajx-loader"  class="hide">
+                  <%= image_tag("ajax-loader.gif")%>
+              </div>
+
                 <div class="padding-20 bg-white">
                   <ul class="pager wizard">
                     <li class="next">
                       <button class="btn btn-primary btn-cons pull-right" type="button">
-                        <span>Next</span>
-                         
+                        <span>Next </span>
+
                       </button>
                     </li>
                     <li class="previous first hidden">
@@ -254,13 +255,13 @@
                         <span>First</span>
                       </button>
                     </li>
-                       <li class="next finish hidden">
-                       <% if (@user.uid && @user.publishable_key) %>    
-                            	<%= d.submit "All Done", :class => "btn btn-primary btn-cons pull-right", :id => "commit" %>
-                            	  
+                       <li class="next finish">
+                       <% if (@user.uid && @user.publishable_key) %>
+
+
                       	<%	else %>
                       			<b class="alert alert-warning"> Cannot Proceed. Payment integration is not done yet.</b>
-                      	<%		
+                      	<%
                       		end
                       			%>
                     </li>
@@ -271,32 +272,20 @@
                     </li>
                   </ul>
                 </div>
-                
-                
-                
-                
-                             
-          
-          
-          
-          
-          
-          
-          
-                
-                
+
+
               </div>
-              
+
             </div>
-                               
-          </div>      <% end %>    
+
+          </div>      <% end %>
       <% end %>
           <!-- END CONTAINER FLUID -->
 <!--         </div> -->
         <!-- END PAGE CONTENT -->
-      
-      
-      
+
+
+
         <!-- START FOOTER -->
         <div class="container-fluid container-fixed-lg footer ">
           <div class="copyright sm-text-center">

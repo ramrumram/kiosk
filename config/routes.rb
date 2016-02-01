@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-    
-  
-  
+
+
+
   devise_for :users, controllers: {registrations: 'users/registrations', omniauth_callbacks: 'omniauth_callbacks'}
   #, omniauth_callbacks: 'omniauth_callbacks'
   #devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -62,17 +62,18 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  
+
   devise_scope :user do
-    
+
  root to: "devise/registrations#edit"
   end
-  
+
   resource :user, only: [:edit] do
+    get "delete_stripe"
   collection do
     patch 'update_password'
   end
-  
+
   end
 
 resources :churches do
@@ -80,7 +81,7 @@ resources :churches do
     get 'invite/:id' => 'churches#invite', as: :invite
     post 'invite/:id' => 'churches#invite'
   end
- end  
+ end
 
 
 

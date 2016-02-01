@@ -16,5 +16,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-sprockets
+//= require functions
+//= require form_wizard
 //= require_tree .
 //= require bootstrap-wysihtml5

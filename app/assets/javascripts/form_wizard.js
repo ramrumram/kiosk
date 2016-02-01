@@ -6,26 +6,30 @@
 (function($) {
 
     'use strict';
-    
-    
-    
 
-    
+
+
+
+
 
     $(document).ready(function() {
+
 
         $('#rootwizard').bootstrapWizard({
         	onTabClick: function(tab, navigation, index) {
 				return false;
 				},
             onTabShow: function(tab, navigation, index) {
+
                 var $total = navigation.find('li').length;
                 var $current = index + 1;
 
                 // If it's the last tab then hide the last button and show the finish instead
                 if ($current >= $total) {
+
+                    $('#rootwizard').find('.pager .previous').hide();
                     $('#rootwizard').find('.pager .next').hide();
-                    $('#rootwizard').find('.pager .finish').show().removeClass('disabled hidden');
+                    submitToStripe();
                 } else {
                     $('#rootwizard').find('.pager .next').show();
                     $('#rootwizard').find('.pager .finish').hide();
@@ -68,9 +72,10 @@
             },
             onNext: function(tab, navigation, index) {
                 console.log("Showing next tab");
+
             },
             onPrevious: function(tab, navigation, index) {
-                console.log("Showing previous tab");
+                $('.payment-errors').addClass('hide')
             },
             onInit: function() {
                 $('#rootwizard ul').removeClass('nav-pills');
