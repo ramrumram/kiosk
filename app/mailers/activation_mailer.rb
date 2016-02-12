@@ -5,7 +5,7 @@ class ActivationMailer < ActionMailer::Base
   def activation_email(activation)
   @content = "<br />Organization: "+activation.title+"<br />Name: <b>"+activation.name+"</b><br />Phone: <b>"+activation.phone+"</b><br />Email: "+activation.email+""
 
-  mail(to: "scott@startgroup.org", subject: 'Merchant account activation - Easygivekiosk.com',  body: @content,  content_type: "text/html").deliver
+  mail(to: "rameshkumar86@gmail.com", subject: 'Merchant account activation - Easygivekiosk.com',  body: @content,  content_type: "text/html").deliver
   end
 
 end
