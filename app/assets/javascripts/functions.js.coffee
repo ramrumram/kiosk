@@ -12,8 +12,9 @@ $ ->
     #price change on wizard
 
   window.submitToStripe = () ->
+
     $("#ajx-loader").removeClass("hide")
-    $form = $(".edit_church")
+    $form = $(".edit_kiosk")
     $cvc = $("#cvc").val()
     $exp_mn = $("#exp_mn").val()
     $exp_yr = $("#exp_yr").val()
@@ -57,7 +58,7 @@ stripeResponseHandler = (status,response)->
   # An extra line
 
   $("#ajx-loader").addClass("hide")
-  $form = $(".edit_church")
+  $form = $(".edit_kiosk")
   if response.error
     # Show the errors on the form
     $form.find('.payment-errors').text(response.error.message).removeClass('hide');

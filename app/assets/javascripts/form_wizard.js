@@ -7,11 +7,6 @@
 
     'use strict';
 
-
-
-
-
-
     $(document).ready(function() {
 
 
@@ -26,6 +21,7 @@
 
                 // If it's the last tab then hide the last button and show the finish instead
                 if ($current >= $total) {
+
 
                     $('#rootwizard').find('.pager .previous').hide();
                     $('#rootwizard').find('.pager .next').hide();

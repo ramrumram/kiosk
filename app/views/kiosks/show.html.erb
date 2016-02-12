@@ -1,11 +1,3 @@
-<% content_for(:header) do %>
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script type="text/javascript">
-  // This identifies your website in the createToken call below
-   Stripe.setPublishableKey('<%= @user.publishable_key %>');
-  // ...
-</script>
-<% end %>
 <!-- START PAGE-CONTAINER -->
     <div class="page-container">
       <!-- START PAGE HEADER WRAPPER -->
@@ -17,7 +9,7 @@
           <div class="pull-right hidden-lg hidden-md p-t-10">
             <%= image_tag("avatar.jpg", :alt => "", :size => "32x32",  data: { src: "avatar.jpg", src_retina: "avatar.jpg" }) %>
             </div>
-          <h3 class="pull-left p-l-30"><strong><%= @church.title %></strong></h3>
+          <h3 class="pull-left p-l-30"><strong><%= @kiosk.title %></strong></h3>
 
             <div class="brand inline">
               <!--
@@ -51,8 +43,7 @@
     <!-- START PAGE-CONTAINER -->
     <div class="page-container pull-left">
 
-        <%= form_for(@church ,url: church_path(@church),  html: { method: :put  },:id => 'donation_form') do |f| %>
-        <%= f.hidden_field :stripe_uid, :value => @user.uid %>
+        <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put  },:id => 'donation_form') do |f| %>
       	<%= f.fields_for :donations, Donation.new  do |d| %>
 
            <!-- START PAGE CONTENT WRAPPER -->
@@ -256,11 +247,11 @@
                       </button>
                     </li>
                        <li class="next finish">
-                       <% if (@user.uid && @user.publishable_key) %>
+                       <% if (@user.merchid) %>
 
 
                       	<%	else %>
-                      			<b class="alert alert-warning"> Cannot Proceed. Payment integration is not done yet.</b>
+                      			<b class="alert alert-warning"> Cannot Proceed. Merchant integration not done yet.</b>
                       	<%
                       		end
                       			%>

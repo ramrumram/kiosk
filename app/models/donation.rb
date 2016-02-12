@@ -1,4 +1,4 @@
 class Donation < ActiveRecord::Base
- belongs_to :church, :class_name => 'Church', :foreign_key => 'church_id'
+ belongs_to :kiosk, :class_name => 'Kiosk', :foreign_key => 'kiosk_id'
 
 end

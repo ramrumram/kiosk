@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204052834) do
+ActiveRecord::Schema.define(version: 20160212184239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activations", force: true do |t|
+    t.string   "title"
+    t.string   "name"
+    t.string   "phone"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "status"
+  end
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -49,40 +59,25 @@ ActiveRecord::Schema.define(version: 20151204052834) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "churches", force: true do |t|
-    t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-    t.string   "slug"
-  end
-
-  add_index "churches", ["slug"], name: "index_churches_on_slug", using: :btree
-  add_index "churches", ["user_id"], name: "index_churches_on_user_id", using: :btree
-
   create_table "donations", force: true do |t|
     t.string   "name"
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "church_id"
+    t.integer  "kiosk_id"
     t.decimal  "amount"
   end
 
-  add_index "donations", ["church_id"], name: "index_donations_on_church_id", using: :btree
+  add_index "donations", ["kiosk_id"], name: "index_donations_on_kiosk_id", using: :btree
 
-  create_table "friendly_id_slugs", force: true do |t|
-    t.string   "slug",                      null: false
-    t.integer  "sluggable_id",              null: false
-    t.string   "sluggable_type", limit: 50
-    t.string   "scope"
+  create_table "kiosks", force: true do |t|
+    t.string   "title"
     t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+  add_index "kiosks", ["user_id"], name: "index_kiosks_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -102,13 +97,7 @@ ActiveRecord::Schema.define(version: 20151204052834) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "username",               default: "", null: false
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "phone"
-    t.string   "publishable_key"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "access_code"
+    t.string   "merchid"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

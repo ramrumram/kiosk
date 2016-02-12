@@ -73,68 +73,45 @@
               <div class="panel-body">
                 <div class="row">
                   <div class="col-sm-10">
-                    <h3>Kiosk Settings</h3>
-                    <p>Please complete all fields. The setup of your Stripe account is required, this is what processes the credit card payments. They are only 2.9% plus $0.30 per transaction. We have chosen to use them as the payment processor because of their flat rate pricing, no credit card reader required, great customer support and quick funding.
+                    <h3>Setup</h3>
+                    <p>Welcome to Easy Give Kiosk! The ONLY 100% free donation / kiosk software on the web. Before you begin to use your new donation page, we must know how to title it and you must have a merchant account.
+                       <p class="small hint-text pull-right">
+                        <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
+                          </p>
                     </p>
                     <br>
 					<%= devise_error_messages! %>
 
-                    <p class="small hint-text">Please provide the contact information of whomever is authorized to accept these funds.</p>
-
                     <%= form_for(setup_user(resource), as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
 
-                      <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">First & Last Name</label>
-                        <div class="col-sm-4 m-b-10">
-                          <%= f.text_field :first_name, :placeholder => "John", :class => "form-control", :required => true%>
 
-                        </div>
-                        <div class="col-sm-5">
-						<%= f.text_field :last_name, :placeholder => "Smith", :class => "form-control", :required => true%>
 
-                        </div>
+
+
+
+
+                    <div class="form-group">
+                      <label for="fname" class="col-sm-3 control-label">TITLE OF KIOSK FORM</label>
+                      <div class="col-sm-9">
+                      <%= f.fields_for :kiosk do |ff| %>
+                        <%= ff.text_field :title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 20, :required => true%>
+
+
+                      <% end %>
                       </div>
+                    </div>
+
+
                       <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">Username</label>
+                        <label for="fname" class="col-sm-3 control-label">YOUR WEBSITE</label>
                         <div class="col-sm-9">
-                        <%= f.text_field :username, :placeholder => "mychurch123", :class => "form-control", :disabled => true%>
+                           <p class="hint-text small">You can share the link, post it on your email or even display on your own website.</p>
+                           <%= preview_link(resource) %>
 
-                          <small>
-                          <%= link_to "Change Password",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>
 
-                          </small>
                         </div>
                       </div>
 
-
-
-
-
-
-                      <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">Email Address</label>
-                        <div class="col-sm-9">
-                         <%= f.email_field :email, :placeholder => "Where do we send donation stats to?", :class => "form-control", :required => true%></p>
-
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">Title of Donation Form</label>
-                        <div class="col-sm-9">
-                        <%= f.fields_for :church do |ff| %>
-                        	<%= ff.text_field :title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 20, :required => true%>
-                        	<%= preview_link(resource) %> <%= invite_link(resource) %>
-
-                        <% end %>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="fname" class="col-sm-3 control-label">Telephone Number</label>
-                        <div class="col-sm-9">
-                         <%= f.text_field :phone, :placeholder => "808-555-1212", :class => "form-control", :required => true%>
-
-                        </div>
-                      </div>
 
                       <div class="form-group">
                         <label class="col-sm-3 control-label">Stripe Payments</label>
@@ -142,13 +119,17 @@
 
                           <p>
 
-						<% if (f.object.uid && f.object.publishable_key)%>
-						<b class="alert alert-success"> Stripe account connected</b>
-            <%= link_to "Disconnect",  delete_stripe_user_path(),  :class => "btn btn-primary",  :target => '_blank', :role => "button" %>
-						<% else %>
-						<%= link_to image_tag('stripe.png'), user_omniauth_authorize_path(:stripe_connect) %>
-						<%= link_to 'https://stripe.com', class: '',  title: 'Donations made will be sent to your Stripe account.', 'data-toggle' => 'tooltip', 'data-placement' => 'right' do %>
-  <span class="glyphicon glyphicon-question-sign"></span><% end %>
+						<% if (f.object.merchid)%>
+						<b class="alert alert-success"> Merchant account provided</b>
+            <% else %>
+              <p>In order to accept donations by any credit card, you will need a merchant account. Getting a merchant account for most businesses, including non-profits is easy. If you need help, feel free to call (310) 878-2967 for assistance. </p>
+                <div class="row">
+                     <div class="col-sm-9">
+                       <button class="btn btn-complete" type="submit">Activate Card Processing</button>
+                       <!--                           <button class="btn btn-default"><i class="pg-close"></i> Clear</button> -->
+
+                     </div>
+                       </div>
 						<% end %>
     					</p>
 
@@ -161,7 +142,7 @@
                       <br>
                       <div class="row col-sm-12">
                         <div class="col-sm-6">
-                        <%= f.submit "Save & Launch App", :class => "btn btn-success" %>
+                        <%= f.submit "Save", :class => "btn btn-success" %>
 
 	                    </div>
                       </div>
