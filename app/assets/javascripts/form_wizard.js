@@ -4,31 +4,69 @@
  * For DEMO purposes only. Extract what you need.
  * ============================================================ */
 (function($) {
-
-    'use strict';
-
     $(document).ready(function() {
+
+        function submitToCC() {
+
+          $(".payment-errors").addClass("hide")
+          $("#ajx-loader").removeClass("hide")
+          $form = $(".edit_kiosk")
+          $cvc = $("#cvc").val()
+          $exp_mn = $("#exp_mn").val()
+          $exp_yr = $("#exp_yr").val()
+          $number = $("#number").val()
+          $cust_name = $(".cust_name").val()
+        //  $(this).prop('disabled', true);
+          $form.submit()
+
+        }
 
 
         $('#rootwizard').bootstrapWizard({
         	onTabClick: function(tab, navigation, index) {
+
+
 				return false;
 				},
             onTabShow: function(tab, navigation, index) {
 
+              $valid = true
+              //form validtion
+              if (index == 2  ) {
+                $cust_name = $(".cust_name").val()
+                $cvc = $("#cvc").val()
+                $number = $("#number").val()
+
+                if ($cvc == "" || $number == "" || $cust_name == "" ) {
+                    $(".payment-errors").html("Mandatory fields cannot be empty").removeClass("hide")
+                    $('#rootwizard').bootstrapWizard('show',1);
+                    $valid = false
+                }
+
+
+              }
+
+
                 var $total = navigation.find('li').length;
                 var $current = index + 1;
 
-                // If it's the last tab then hide the last button and show the finish instead
-                if ($current >= $total) {
+                // If it's the last tab then hide the last button and show the finish instead..only if the form passed validatoins
+                if ($current >= $total && $valid) {
 
-
+                    $(".payment-errors").addClass('hide')
                     $('#rootwizard').find('.pager .previous').hide();
                     $('#rootwizard').find('.pager .next').hide();
-                    submitToStripe();
-                } else {
+
+                    submitToCC();
+                } //don't show the thrid tab if on test preview
+
+                else if (index == 1  && $("#merchid_warning").html() ) {
+                    $('#rootwizard').find('.pager .next').hide();
+                }
+                else {
+
                     $('#rootwizard').find('.pager .next').show();
-                    $('#rootwizard').find('.pager .finish').hide();
+                //    $('#rootwizard').find('.pager .finish').hide();
                 }
 
                 var li = navigation.find('li.active');

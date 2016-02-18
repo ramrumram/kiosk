@@ -1,0 +1,7 @@
+$("#ajx-loader").addClass("hide")
+<% if @response['errors'] != nil %>
+  $(".payment-errors").html("<%=@response['errors'] %>").removeClass("hide")
+  $('#rootwizard').find('.pager .previous').show();
+<% elsif @response['status'] != nil %>
+  $(".payment-info").html("Success<%=@response['status'] %>. Your reference number : <b><%=@response['retref']%></b> for future correspondence.").removeClass("hide")
+<% end%>

@@ -45,6 +45,11 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 
 gem 'bootstrap-wysihtml5-rails'
 
+gem 'cardconnect'
+
+#gem 'rest-client'
+#gem 'openssl'
+
 group :development do
   gem 'rails_layout'
 end

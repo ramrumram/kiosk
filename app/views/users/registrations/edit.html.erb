@@ -77,6 +77,8 @@
                     <p>Welcome to Easy Give Kiosk! The ONLY 100% free donation / kiosk software on the web. Before you begin to use your new donation page, we must know how to title it and you must have a merchant account.
                        <p class="small hint-text pull-right">
                         <%= link_to "Click here ",	edit_user_path(resource_name),  :class => "", :role => "button", :remote => true, :data => {:toggle=>"modal", :target => "#ajax-modal"} %>to change your password.
+
+
                           </p>
                     </p>
                     <br>
@@ -125,7 +127,7 @@
               <p>In order to accept donations by any credit card, you will need a merchant account. Getting a merchant account for most businesses, including non-profits is easy. If you need help, feel free to call (310) 878-2967 for assistance. </p>
                 <div class="row">
                      <div class="col-sm-9">
-                       <button class="btn btn-complete" type="submit">Activate Card Processing</button>
+                       <%= link_to "Activate Card Processing",	new_activation_path(),  :class => "btn btn-complete", :role => "button"%>
                        <!--                           <button class="btn btn-default"><i class="pg-close"></i> Clear</button> -->
 
                      </div>

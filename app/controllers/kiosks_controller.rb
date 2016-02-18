@@ -11,41 +11,74 @@ end
 
   def update
     begin
-     desc = "Donation to  " + params[:id]
-     token = params[:stripeToken]
-     amount = params[:kiosk][:donations_attributes]["0"][:amount].to_f * 100
-     stripe_uid = params[:kiosk][:stripe_uid]
+       id = params[:id]
+       kiosk = Kiosk.find(id)
+       number = params[:number]
+       cvc = params[:cvc]
+       exp_mn = params[:exp_mn].to_s
+       exp_yr = params[:exp_yr].to_s
+       amount = params[:kiosk][:donations_attributes]["0"][:amount]
+       name = params[:kiosk][:donations_attributes]["0"][:name]
+       email = params[:kiosk][:donations_attributes]["0"][:email]
 
-     amount = amount.to_i
-     email = params[:kiosk][:donations_attributes]["0"][:email]
+       pay_params = {"merchid" => kiosk.user.merchid, "account"=>number,"expiry"=>exp_mn+exp_yr,"amount"=>amount,"currency"=>"USD","name"=>name, "ecomind"=>"E","cvv2"=>cvc,"tokenize"=>"N"}
 
-      stripe_params = {
-       :amount => amount,
-      :currency => "usd",
-      :source => token,
-      :description => desc,
-      :application_fee => 30,
+       service = CardConnect::Service::Authorization.new
+       service.build_request(pay_params)
+       begin
+         response = service.submit
+         if(response.respstat == "A")
+          string_email = ""
+           if !email.blank? && email != ""
+             string_email = "from "+email
+           end
+
+          pay_params = {"merchid" => kiosk.user.merchid,"retref" => response.retref, "items" => [{"description" => "Donation for "+kiosk.title + string_email}]}
+
+          begin
+            service = CardConnect::Service::Capture.new
+            service.build_request(pay_params)
+            response = service.submit
+            @response = {"status" => "! "+response.setlstat, "retref" => response.retref}
+            if (response.setlstat != 'Rejected')
+              logger.info "NOT REEFFDFDFDFDFFD"
+              logger.info   params[:kiosk][:donations_attributes]["0"].inspect
+              params[:kiosk][:donations_attributes]["0"][:cardconnectref] = response.retref
 
 
-     }
+              if kiosk.update(donation_params)
+                if !email.blank? && email != ""
+                    charge = {"email" => email, "name" => name,"amount" => amount, "retref" => response.retref }
+                    KioskMailer.receipt_email(charge).deliver
+                end
+              end
+              #is Rejected
+            else
+              @response = {"errors" => "Request Declined! "+response.setlstat}
+            end
 
-     #send out receipt  as well
-     if !email.blank?
-        stripe_params[:receipt_email] = email
+          rescue Exception => msg
+             @response = {"errors" => "Error in connection / Merchant id wrong"}
+          end
 
-     end
-     Stripe.api_key = Rails.application.secrets.secret_key
-       # => email,
-     charge = Stripe::Charge.create(stripe_params ,{:stripe_account => stripe_uid})
-   rescue Stripe::CardError => e
-   else
-    @kiosk = Kiosk.friendly.find(params[:id])
-    if @obj = @kiosk.update(donation_params)
-        if !email.blank?
-            KioskMailer.receipt_email(charge).deliver
+        #respstat is not 'A'
+      else
+        @response = {"errors" => "Request Declined! "+response.errors.join(",")}
         end
-        render 'success'
-    end
+
+
+       rescue Exception => msg
+           @response = {"errors" => "Error in connection / Merchant id wrong"}
+       end
+
+
+
+
+logger.info @response.inspect
+      respond_to do |format|
+            format.js  {}
+      end
+
     end
   end
 
@@ -64,6 +97,6 @@ end
   private
 
     def donation_params
-      params.require(:kiosk).permit(donations_attributes:  [:title,:name, :email, :amount, :stripeToken, :stripe_uid] )
+      params.require(:kiosk).permit(donations_attributes:  [:title,:name, :email, :amount, :cardconnectref] )
     end
 end

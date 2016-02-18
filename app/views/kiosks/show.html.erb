@@ -43,7 +43,7 @@
     <!-- START PAGE-CONTAINER -->
     <div class="page-container pull-left">
 
-        <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put  },:id => 'donation_form') do |f| %>
+        <%= form_for(@kiosk ,url: kiosk_path(@kiosk),  html: { method: :put  },:id => 'donation_form', :remote => true) do |f| %>
       	<%= f.fields_for :donations, Donation.new  do |d| %>
 
            <!-- START PAGE CONTENT WRAPPER -->
@@ -75,7 +75,7 @@
                         <h5><strong>Welcome to our<span class="hidden-xs"> self serve</span> donation kiosk.</strong></h5>
                         <div class="row">
                           <div class="col-lg-5 col-md-6">
-                            <p class="no-margin">Please choose the amount that you would like to contribute to First Methodist Church. </p>
+                            <p class="no-margin">Please choose the amount that you would like to contribute to <%= @kiosk.title %></p>
 
                           </div>
                           <div class="visible-lg visible-md visible-sm col-lg-7 col-md-6">
@@ -151,17 +151,18 @@
                             <div class="form-group form-group-default required m-t-25">
                               <label>Card holder's name</label>
 
-                              <%= d.text_field :name, :placeholder => "Name on the card", :class => "form-control cust_name", :required => true%>
+                              <%= d.text_field :name, :placeholder => "Name on the card", :class => "form-control cust_name", :required => true, :value => ""%>
 
                             </div>
                             <div class="form-group form-group-default required">
                               <label>Card number</label>
-                              <input type="text" id="number" data-stripe="number" pattern="\d*" class="form-control" placeholder="8888-8888-8888-8888" value="4000000000000077" required>
+                              <input type="text" id="number" name="number"  class="form-control" placeholder="8888-8888-8888-8888" value="4000000000000077" required>
                             </div>
 
                            <div class="form-group form-group-default required">
                            <label>CVC</label>
-						      <input type="text" id="cvc" size="4" class="form-control" value="120" data-stripe="cvc"/>
+
+						      <input type="text" id="cvc" name="cvc" size="4" class="form-control" value="120" data-stripe="cvc"/>
   							</div>
 
                             <div class="row">
@@ -170,7 +171,7 @@
                               <div class="col-md-4">
                                 <label>Expiration Date</label>
                                 <br>
-                                <select id="exp_mn" class="cs-select cs-skin-slide" data-init-plugin="cs-select"  data-stripe="exp-month">
+                                <select id="exp_mn" name="exp_mn" class="cs-select cs-skin-slide" data-init-plugin="cs-select"  data-stripe="exp-month">
                                   <option value="01" >Jan (01)</option>
                                   <option value="02">Feb (02)</option>
                                   <option value="03">Mar (03)</option>
@@ -184,24 +185,24 @@
                                   <option value="11">Nov (11)</option>
                                   <option value="12">Dec (12)</option>
                                 </select>
-                                <select id="exp_yr" class="cs-select cs-skin-slide" data-init-plugin="cs-select" data-stripe="exp-year">
-                                  <option value="2016">2016</option>
-                                  <option value="2017">2017</option>
-                                  <option value="2018">2018</option>
-                                  <option value="2019">2019</option>
-                                  <option value="2020">2020</option>
-                                  <option value="2021">2021</option>
-                                  <option value="2022">2022</option>
-                                  <option value="2023">2023</option>
-                                  <option value="2024">2024</option>
-                                  <option value="2025">2025</option>
-                                  <option value="2026">2026</option>
-                                  <option value="2027">2027</option>
-                                  <option value="2028">2028</option>
-                                  <option value="2029">2029</option>
-                                  <option value="2030">2030</option>
-                                  <option value="2031">2031</option>
-                                  <option value="2032">2032</option>
+                                <select id="exp_yr" name="exp_yr" class="cs-select cs-skin-slide" data-init-plugin="cs-select" data-stripe="exp-year">
+                                  <option value="16">2016</option>
+                                  <option value="17">2017</option>
+                                  <option value="18">2018</option>
+                                  <option value="19">2019</option>
+                                  <option value="20">2020</option>
+                                  <option value="21">2021</option>
+                                  <option value="22">2022</option>
+                                  <option value="23">2023</option>
+                                  <option value="24">2024</option>
+                                  <option value="25">2025</option>
+                                  <option value="26">2026</option>
+                                  <option value="27">2027</option>
+                                  <option value="28">2028</option>
+                                  <option value="29">2029</option>
+                                  <option value="30">2030</option>
+                                  <option value="31">2031</option>
+                                  <option value="32">2032</option>
                                 </select>
                               </div>
                               <div class="col-md-8">
@@ -217,8 +218,9 @@
                 </div>
                 <div class="tab-pane slide-left padding-20" id="tab3">
 
+
 					<p class="small">Your payment will be processed now.</p>
-                    <p class="small">Your credit card statement will show "Stripe" as your donation description.</p>
+                    <p class="small">Your credit card statement will show "CardConnect" as your donation description.</p>
 
 
 
@@ -229,6 +231,8 @@
                 <div class="payment-errors alert alert-error hide">
                 </div>
 
+                <div class="payment-info alert alert-info hide">
+                </div>
                 <div id="ajx-loader"  class="hide">
                   <%= image_tag("ajax-loader.gif")%>
               </div>
@@ -251,7 +255,8 @@
 
 
                       	<%	else %>
-                      			<b class="alert alert-warning"> Cannot Proceed. Merchant integration not done yet.</b>
+
+                      			<b id="merchid_warning" class="alert alert-warning">Test preview. Merchant integration not done yet.</b>
                       	<%
                       		end
                       			%>
@@ -269,7 +274,11 @@
 
             </div>
 
-          </div>      <% end %>
+          </div>
+
+
+
+           <% end %>
       <% end %>
           <!-- END CONTAINER FLUID -->
 <!--         </div> -->

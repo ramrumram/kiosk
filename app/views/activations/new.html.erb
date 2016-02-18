@@ -98,7 +98,7 @@
                 <div class="form-group">
                   <label for="fname" class="col-sm-3 control-label">Name of Organization</label>
                   <div class="col-sm-9">
-                    <%= ff.text_field :title, :placeholder => "Example: First Church", :class => "form-control", :maxlength => 20, :required => true%>
+                    <%= ff.text_field :title, :placeholder => "Example: First Church", :class => "form-control", :maxlength => 200, :required => true%>
                   </div>
                 </div>
 
@@ -106,7 +106,7 @@
                 <div class="form-group">
                   <label for="fname" class="col-sm-3 control-label">Contact Name</label>
                   <div class="col-sm-9">
-                    <%= ff.text_field :name, :placeholder => "Who are we calling?", :class => "form-control", :maxlength => 20, :required => true%>
+                    <%= ff.text_field :name, :placeholder => "Who are we calling?", :class => "form-control", :maxlength => 150, :required => true%>
                   </div>
                 </div>
 
@@ -120,14 +120,14 @@
                   <div class="form-group">
                     <label for="fname" class="col-sm-3 control-label">Email</label>
                     <div class="col-sm-9">
-                      <%= ff.text_field :email, :placeholder => "Example: psmith@gmail.com", :class => "form-control", :maxlength => 20, :required => true%>
+                      <%= ff.text_field :email, :placeholder => "Example: psmith@gmail.com", :class => "form-control", :maxlength => 150, :required => true%>
                     </div>
                   </div>
 
                   <br>
                   <div class="row col-sm-12">
                     <div class="col-sm-6">
-                    <%= ff.submit "Save", :class => "btn btn-success" %>
+                    <%= ff.submit "Send", :class => "btn btn-success" %>
 
                   </div>
                   </div>
