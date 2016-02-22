@@ -41,7 +41,7 @@ end
             response = service.submit
             @response = {"status" => "! "+response.setlstat, "retref" => response.retref}
             if (response.setlstat != 'Rejected')
-              logger.info "NOT REEFFDFDFDFDFFD"
+            
               logger.info   params[:kiosk][:donations_attributes]["0"].inspect
               params[:kiosk][:donations_attributes]["0"][:cardconnectref] = response.retref
 

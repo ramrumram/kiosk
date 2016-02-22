@@ -37,27 +37,32 @@
                 $cvc = $("#cvc").val()
                 $number = $("#number").val()
 
+
                 if ($cvc == "" || $number == "" || $cust_name == "" ) {
                     $(".payment-errors").html("Mandatory fields cannot be empty").removeClass("hide")
-                    $('#rootwizard').bootstrapWizard('show',1);
+                      $('#rootwizard').bootstrapWizard('show',1);
                     $valid = false
                 }
 
+                  //only if the form passed validatoins
+                if ($valid) {
+                  $(".payment-errors").addClass('hide')
 
+                  submitToCC();
+                }
               }
 
 
                 var $total = navigation.find('li').length;
                 var $current = index + 1;
 
-                // If it's the last tab then hide the last button and show the finish instead..only if the form passed validatoins
+                // If it's the last tab then hide the last button and show the finish instead..
                 if ($current >= $total && $valid) {
 
-                    $(".payment-errors").addClass('hide')
-                    $('#rootwizard').find('.pager .previous').hide();
-                    $('#rootwizard').find('.pager .next').hide();
+                  $('#rootwizard').find('.pager .previous').hide();
+                  $('#rootwizard').find('.pager .next').hide();
 
-                    submitToCC();
+
                 } //don't show the thrid tab if on test preview
 
                 else if (index == 1  && $("#merchid_warning").html() ) {

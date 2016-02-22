@@ -136,8 +136,8 @@
 
                           <div class="b-rad-lg">
 
-                            <h3 class="pull-left no-margin">$<span id="display_amt">5.30</span> charge to your card.</h3><br>
-                            <small class="pull-left no-margin hint-text">$0.30 fee added to support donation software.</small>
+                            <h3 class="pull-left no-margin">$<span id="display_amt">5.00</span> charge to your card.</h3><br>
+                            <small class="pull-left no-margin hint-text"></small>
                             <ul class="list-unstyled pull-right list-inline no-margin">
                               <li>
                                 <%= image_tag("cards.png", :alt => "", :class => "brand hidden-xs", :size => "274x30",  data: { src: "cards.png", src_retina: "cards.png" }) %>
@@ -146,7 +146,7 @@
 
                             </ul>
                             <div class="clearfix"></div>
-                            <%= d.hidden_field :amount, :id => "amount", :value => 5.30 %>
+                            <%= d.hidden_field :amount, :id => "amount", :value => 5.00 %>
 
                             <div class="form-group form-group-default required m-t-25">
                               <label>Card holder's name</label>
@@ -219,8 +219,7 @@
                 <div class="tab-pane slide-left padding-20" id="tab3">
 
 
-					<p class="small">Your payment will be processed now.</p>
-                    <p class="small">Your credit card statement will show "CardConnect" as your donation description.</p>
+					
 
 
 

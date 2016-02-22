@@ -3,5 +3,6 @@ $("#ajx-loader").addClass("hide")
   $(".payment-errors").html("<%=@response['errors'] %>").removeClass("hide")
   $('#rootwizard').find('.pager .previous').show();
 <% elsif @response['status'] != nil %>
-  $(".payment-info").html("Success<%=@response['status'] %>. Your reference number : <b><%=@response['retref']%></b> for future correspondence.").removeClass("hide")
+  $("#tab3").html('<p class="small">Your payment will be processed now.</p> <p class="small">Your credit card statement will show "CardConnect" as your donation description.</p>');
+  $(".payment-info").html("Success<%=@response['status'] %>.").removeClass("hide")
 <% end%>

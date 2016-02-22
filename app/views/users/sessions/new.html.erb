@@ -4,7 +4,7 @@
       <div class="bg-pic">
         <!-- START Background Pic-->
         <%= image_tag("home.jpg", :alt => "", :class => "lazy",  data: { src: "home.jpg", src_retina: "home.jpg" }) %>
-        
+
         <!-- END Background Pic-->
         <!-- START Background Caption-->
         <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
@@ -22,19 +22,19 @@
         <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
 <!--           <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22"> -->
 <h2>Free donation & tithe pages.</h2>
-<h6>Build a donation page for your organization's website, or setup your own tithe kiosk for free. No monthly fees, only $0.30 per donation to support the system. <a href="examples">Click here to see some examples.</a></h6>
+<h6>Build a donation page for your organization's website, or setup your own tithe kiosk for free.  <a href="examples">Click here to see some examples.</a></h6>
           <p class="p-t-35">Sign into your EasyGiveKiosk.com account</p>
           <!-- START Login Form -->
-          
-          
-           <%= form_for(resource, as: resource_name, url: session_path(resource_name),  :html => {:class => "p-t-15"}) do |f| %>     
+
+
+           <%= form_for(resource, as: resource_name, url: session_path(resource_name),  :html => {:class => "p-t-15"}) do |f| %>
             <!-- START Form Control-->
             <div class="form-group form-group-default">
               <label>Login</label>
               <div class="controls">
-               
+
    				<%= f.text_field :login, :placeholder => "UserName", :class => "form-control", :required => true%></p>
-                
+
               </div>
             </div>
             <!-- END Form Control-->
@@ -42,7 +42,7 @@
             <div class="form-group form-group-default">
               <label>Password</label>
               <div class="controls">
-        
+
 		    <%= f.password_field :password, autocomplete: "off", :placeholder => "Credentials", :class => "form-control",:required => true %>
 
               </div>
@@ -51,9 +51,9 @@
             <div class="row">
               <div class="col-md-6 no-padding">
                 <div class="checkbox ">
-         
-  
-      			<%= f.check_box :remember_me, id:"checkbox1" %>          
+
+
+      			<%= f.check_box :remember_me, id:"checkbox1" %>
                   <label for="checkbox1">Keep Me Signed in</label>
                 </div>
               </div>
@@ -67,7 +67,7 @@
             <!-- END Form Control-->
              <%= f.submit "Sign in", :class => "btn btn-primary btn-cons m-t-10 pull-left" %>
              <%= link_to "Register", new_registration_path(resource_name),  :class => "btn btn-success btn-cons m-t-10 pull-right", :role => "button"%>
-            
+
 
          <% end %>
           <!--END Login Form-->
@@ -75,9 +75,9 @@
             <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
 <!--
             <small><a href="privacy">Privacy Policy</a></small>
-			<small>© 2015 Easy Give Kiosk.</small> 
+			<small>© 2015 Easy Give Kiosk.</small>
 -->
-          
+
 
               <!--
 <div class="col-sm-3 col-md-2 no-padding">
