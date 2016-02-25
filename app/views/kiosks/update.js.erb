@@ -3,6 +3,9 @@ $("#ajx-loader").addClass("hide")
   $(".payment-errors").html("<%=@response['errors'] %>").removeClass("hide")
   $('#rootwizard').find('.pager .previous').show();
 <% elsif @response['status'] != nil %>
-  $("#tab3").html('<p class="small">Your payment will be processed now.</p> <p class="small">Your credit card statement will show "CardConnect" as your donation description.</p>');
-  $(".payment-info").html("Success<%=@response['status'] %>.").removeClass("hide")
+  $("#tab3").html('<p class="small">Thank you very much. The page will reset in 3 seconds.</p> ');
+  $("#pager-cont").hide()
+  $(".payment-info").html("Approved!").removeClass("hide")
+  setTimeout(function(){  location.reload(); },3000);
+
 <% end%>

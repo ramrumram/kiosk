@@ -22,7 +22,7 @@
         </div>
         <div class=" pull-right">
           <!-- START User Info-->
-          <div class="visible-lg visible-md m-t-10">
+          <div class="visible-lg visible-md hidden-sm m-t-10">
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
               <span class="semi-bold">Secure</span> <span class="text-master">Form</span>
             </div>
@@ -78,7 +78,7 @@
                             <p class="no-margin">Please choose the amount that you would like to contribute to <%= @kiosk.title %></p>
 
                           </div>
-                          <div class="visible-lg visible-md visible-sm col-lg-7 col-md-6">
+                          <div class="visible-lg visible-md hidden-sm hidden-xs col-lg-7 col-md-6">
                             <div class="btn-group pull-right" data-toggle="buttons" id="pricegroup">
                               <label class="btn btn-default active">
                                 <input type="radio" name="options" value="5" checked> <span class="fs-16">$5</span>
@@ -101,7 +101,7 @@
                         </div>
                           </div>
 
-                          <div class="visible-xs col-lg-7 col-md-6">
+                          <div class="visible-xs visible-sm col-lg-7 col-md-6">
                           <br>
                             <div class="btn-group pull-right" data-toggle="buttons">
 
@@ -219,7 +219,7 @@
                 <div class="tab-pane slide-left padding-20" id="tab3">
 
 
-					
+
 
 
 
@@ -230,13 +230,14 @@
                 <div class="payment-errors alert alert-error hide">
                 </div>
 
-                <div class="payment-info alert alert-info hide">
+                <div class="payment-info alert alert-info hide text-center">
                 </div>
-                <div id="ajx-loader"  class="hide">
+                <div id="ajx-loader"  class="hide text-center">
                   <%= image_tag("ajax-loader.gif")%>
+                  Your card will be charged now. Please wait.
               </div>
 
-                <div class="padding-20 bg-white">
+                <div id ="pager-cont" class="padding-20 bg-white">
                   <ul class="pager wizard">
                     <li class="next">
                       <button class="btn btn-primary btn-cons pull-right" type="button">

@@ -48,3 +48,13 @@ ul.nav li a {
   color: #b94a48;
 }
 
+@keyframes blink {
+to { color: #B4AFAF; }
+}
+
+#ajx-loader {
+
+animation: blink 1s steps(2, start) infinite;
+background:#fff;
+}
+
