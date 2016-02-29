@@ -47,6 +47,8 @@ gem 'bootstrap-wysihtml5-rails'
 
 gem 'cardconnect'
 
+gem 'gaffe'
+
 #gem 'rest-client'
 #gem 'openssl'
 
