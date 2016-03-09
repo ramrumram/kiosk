@@ -8,18 +8,7 @@ class UsersController < ApplicationController
 
   end
 
-  def delete_stripe
-      @user = User.find(current_user.id)
-      @user.update_attributes({
-        provider: nil,
-        uid: nil,
-        access_code: nil,
-        publishable_key: nil
-      })
-      @user.save
-    #  logger.info "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-      redirect_to root_path
-  end
+
 
 
   def update_password

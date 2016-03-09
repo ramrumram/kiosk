@@ -96,7 +96,7 @@
                       <label for="fname" class="col-sm-3 control-label">TITLE OF KIOSK FORM</label>
                       <div class="col-sm-9">
                       <%= f.fields_for :kiosk do |ff| %>
-                        <%= ff.text_field :title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 20, :required => true%>
+                        <%= ff.text_field :title, :placeholder => "Example: First Church Tithe", :class => "form-control", :maxlength => 250, :required => true%>
 
 
                       <% end %>
@@ -116,7 +116,7 @@
 
 
                       <div class="form-group">
-                        <label class="col-sm-3 control-label">Stripe Payments</label>
+                        <label class="col-sm-3 control-label">Donations</label>
                         <div class="col-sm-9">
 
                           <p>
@@ -124,7 +124,7 @@
 						<% if (f.object.merchid)%>
 						<b class="alert alert-success"> Merchant account provided</b>
             <% else %>
-              <p>In order to accept donations by any credit card, you will need a merchant account. Getting a merchant account for most businesses, including non-profits is easy. If you need help, feel free to call (310) 878-2967 for assistance. </p>
+              <p>In order to accept donations by any credit card, you will need a merchant account. A merchant account is what deposits into your bank account, think of it like a bridge. Getting a merchant account for most businesses, including non-profits is easy. If you need help, feel free to call (310) 878-2967 for assistance. </p>
                 <div class="row">
                      <div class="col-sm-9">
                        <%= link_to "Activate Card Processing",	new_activation_path(),  :class => "btn btn-complete", :role => "button"%>
@@ -169,19 +169,7 @@
 </div>
 
         <!-- START FOOTER -->
-        <div class="container-fluid container-fixed-lg footer">
-          <div class="copyright sm-text-center">
-            <p class="small no-margin pull-left sm-pull-reset">
-              <span class="hint-text">Copyright © </span>
-              <span class="font-montserrat">Easy Give Kiosk</span>.
-              <span class="hint-text">All rights reserved.</span>
-              <span class="sm-block"><a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a>
-                        </span>
-            </p>
-
-            <div class="clearfix"></div>
-          </div>
-        </div>
+        <%= render "layouts/footer" %>
         <!-- END FOOTER -->
       </div>
       <!-- END PAGE CONTENT WRAPPER -->

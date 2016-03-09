@@ -3,7 +3,7 @@
       <!-- START Login Background Pic Wrapper-->
       <div class="bg-pic">
         <!-- START Background Pic-->
-        <%= image_tag("home.jpg", :alt => "", :class => "lazy",  data: { src: "home.jpg", src_retina: "home.jpg" }) %>
+        <%= image_tag("home.jpg", :class => "lazy" ) %>
 
         <!-- END Background Pic-->
         <!-- START Background Caption-->
@@ -11,7 +11,7 @@
           <h2 class="semi-bold text-white">
 					<!-- title -->  </h2>
           <p class="small">
-            © 2015 Easy Give Kiosk.    &nbsp;&nbsp;&nbsp; <a href="privacy">Privacy Policy</a>
+            © 2016 Easy Give Kiosk.    &nbsp;&nbsp;&nbsp; <a target="_new" href="/terms">Terms of Use</a>
           </p>
         </div>
         <!-- END Background Caption-->
@@ -22,7 +22,7 @@
         <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
 <!--           <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22"> -->
 <h2>Free donation & tithe pages.</h2>
-<h6>Build a donation page for your organization's website, or setup your own tithe kiosk for free.  <a href="examples">Click here to see some examples.</a></h6>
+<h6>Build a donation page for your organization's website, or setup your own tithe kiosk for free.  <a target="blank" href="/donations/1000">Click here to see an example.</a></h6>
           <p class="p-t-35">Sign into your EasyGiveKiosk.com account</p>
           <!-- START Login Form -->
 
@@ -57,9 +57,7 @@
                   <label for="checkbox1">Keep Me Signed in</label>
                 </div>
               </div>
-              <div class="col-md-6 text-right">
-                <a href="#" class="text-info small">Help? Contact Support</a>
-              </div>
+              
               <div class="col-md-6 text-right">
                 <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
               </div>

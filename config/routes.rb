@@ -67,11 +67,13 @@ Rails.application.routes.draw do
   devise_scope :user do
 
  root to: "devise/registrations#edit"
+
   end
 
   resource :user, only: [:edit] do
   collection do
     patch 'update_password'
+
   end
 
   end
@@ -79,6 +81,7 @@ Rails.application.routes.draw do
 #kiosk will be shown as donations while receiving donations..like http://easygivekiosk.com/donations/1001
 resources :kiosks , :path => :donations
 resources :activations
+resources :terms , only: [:index]
 
 
 

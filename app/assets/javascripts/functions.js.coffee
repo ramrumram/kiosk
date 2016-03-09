@@ -28,7 +28,7 @@ $ ->
     $('#amount').val($amt)
     $('#display_amt').html($amt)
 
-
+  
 
   $('.wysihtml5').each ->
         $(this).wysihtml5();
