@@ -96,7 +96,11 @@
                                 <input type="radio" name="options" value="100"> <span class="fs-16">$100</span>
                               </label>
                               <label class="btn btn-default">
-                                <input type="radio" name="options" value="250"> <span class="fs-16">$250</span>
+                                 <input type="radio" name="options" value="250"><span class="fs-16">$250</span>
+                              </label>
+                              <label class="btn btn-default custom-price">
+                                <span  class="fs-16 custom-lbl">Custom</span>
+                                <span class="fs-16 custom-input hidden">$<input type="text"  name="options" value="300"> </span>
                               </label>
                         </div>
                           </div>
@@ -112,10 +116,12 @@
                                   <option value="50">$50</option>
                                   <option value="100">$100</option>
                                   <option value="250">$250</option>
-
+                                  <option value="custom">Custom</option>
                                 </select>
+                                <label class="btn btn-default hidden small-custom-price custom-price">
+                                <div class="fs-12 custom-input"> <span style="float:left;position:relative;top:7px;"> $ </span> <span style="float:left;">  <input type="text" class="form-control" name="options" value="300"> </span> <span style="float:left;position:relative;top:7px;"><%= image_tag("close.png", :alt => "", :size => "16x16", :id => "close-custom", data: { src: "close.png", src_retina: "close.png" }) %> </span></div>
 
-
+                              </label>
 
                                                           </div>
                           </div>
@@ -287,7 +293,7 @@
 
 
         <!-- START FOOTER -->
-  <%= render "layouts/footer" %>
+  <%= render "layouts/footer0" %>
         <!-- END FOOTER -->
       </div>
       <!-- END PAGE CONTENT WRAPPER -->
