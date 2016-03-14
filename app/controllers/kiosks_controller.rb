@@ -22,6 +22,7 @@ end
     begin
        id = params[:id]
        kiosk = Kiosk.find(id)
+
        number = params[:number]
        cvc = params[:cvc]
        exp_mn = params[:exp_mn].to_s
@@ -59,7 +60,6 @@ end
                 @response = {"status" => "! "+response.setlstat, "retref" => response.retref}
                 if (response.setlstat != 'Rejected')
 
-                  logger.info   params[:kiosk][:donations_attributes]["0"].inspect
                   params[:kiosk][:donations_attributes]["0"][:cardconnectref] = response.retref
 
 
@@ -68,6 +68,9 @@ end
                         charge = {"email" => email, "name" => name,"amount" => amount, "retref" => response.retref }
                         KioskMailer.receipt_email(charge).deliver
                     end
+
+                    charge = {"email" => kiosk.user.email,"amount" => amount,"kiosk_name" => kiosk.title}
+                    KioskMailer.owner_email(charge).deliver
                   end
                   #is Rejected
                 else

@@ -47,7 +47,8 @@ $ ->
     else
       $("#pricegroup .btn.active").removeClass("active")
       $(this).addClass('active')
-      $(this).find('.custom-input').removeClass('hidden')
+      $(this).find('.custom-input').removeClass('hidden').focus()
+      $(this).find('.custom-input input').focus()
       $(this).find('.custom-lbl').addClass('hidden')
    #
 
