@@ -6,7 +6,7 @@ class KiosksController < ApplicationController
 
 
       # if it is a test preview
-      if (params[:id] == "9")
+      if (params[:id] == "9" || params[:id] == "1000")
     		@name = "Jason Smith"
         @CVV = 324
         @email = "jsmith1@startgroup.org"

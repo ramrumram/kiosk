@@ -24,6 +24,7 @@ $ ->
       $('#display_amt').html($amt)
     else
       $(".small-custom-price").removeClass('hidden')
+      $(".small-custom-price input").focus()
       $('.cs-wrapper').addClass('hidden')
 
   $('#close-custom').on 'click', ->
