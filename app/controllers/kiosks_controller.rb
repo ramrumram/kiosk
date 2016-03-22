@@ -31,65 +31,81 @@ end
        name = params[:kiosk][:donations_attributes]["0"][:name]
        email = params[:kiosk][:donations_attributes]["0"][:email]
 
+
+	if (params[:id] == "9" || params[:id] == "1000")
+          CardConnect.configuration.api_username = 'testing'
+          CardConnect.configuration.api_password = 'testing123'
+          CardConnect.configuration.endpoint = 'https://fts.cardconnect.com:6443'
+        end
+
+
+
        pay_params = {"merchid" => kiosk.user.merchid, "account"=>number,"expiry"=>exp_mn+exp_yr,"amount"=>amount,"currency"=>"USD","name"=>name, "ecomind"=>"E","cvv2"=>cvc,"tokenize"=>"N"}
 
        service = CardConnect::Service::Authorization.new
        service.build_request(pay_params)
 
        begin
-         response = service.submit
-         if(response.respstat == "A")
-          string_email = ""
-           if !email.blank? && email != ""
-             string_email = "from "+email
-           end
+         amount = amount.to_f
+         if amount <= 0
 
-          pay_params = {"merchid" => kiosk.user.merchid,"retref" => response.retref, "items" => [{"description" => "Donation for "+kiosk.title + string_email}]}
+           logger.info amount
+           @response = {"errors" => "Invalid amount"}
+         else
+               response = service.submit
+               if(response.respstat == "A")
+                string_email = ""
+                 if !email.blank? && email != ""
+                   string_email = "from "+email
+                 end
 
-
-          begin
-            #completely a test account
-        #    if (id == "1000")
-          #      @response = {"status" => "! <p class='small'>Thank you very much. The page will reset in 3 seconds.</p> "}
-
-          #  else
-
-                service = CardConnect::Service::Capture.new
-                service.build_request(pay_params)
-                response = service.submit
-                @response = {"status" => "! "+response.setlstat, "retref" => response.retref}
-                if (response.setlstat != 'Rejected')
-
-                  params[:kiosk][:donations_attributes]["0"][:cardconnectref] = response.retref
+                pay_params = {"merchid" => kiosk.user.merchid,"retref" => response.retref, "items" => [{"description" => "Donation for "+kiosk.title + string_email}]}
 
 
-                  if kiosk.update(donation_params)
-                    if !email.blank? && email != ""
-                        charge = {"email" => email, "name" => name,"amount" => amount, "retref" => response.retref }
-                        KioskMailer.receipt_email(charge).deliver
-                    end
+                begin
+                  #completely a test account
+              #    if (id == "1000")
+                #      @response = {"status" => "! <p class='small'>Thank you very much. The page will reset in 3 seconds.</p> "}
 
-                    charge = {"email" => kiosk.user.email,"amount" => amount,"kiosk_name" => kiosk.title}
-                    KioskMailer.owner_email(charge).deliver
-                  end
-                  #is Rejected
-                else
-                  @response = {"errors" => "Request Declined! "+response.setlstat}
+                #  else
+
+                      service = CardConnect::Service::Capture.new
+                      service.build_request(pay_params)
+                      response = service.submit
+                      @response = {"status" => "! "+response.setlstat, "retref" => response.retref}
+                      if (response.setlstat != 'Rejected')
+
+                        params[:kiosk][:donations_attributes]["0"][:cardconnectref] = response.retref
+
+
+                        if kiosk.update(donation_params)
+                          if !email.blank? && email != ""
+                              charge = {"email" => email, "name" => name,"amount" => amount, "retref" => response.retref }
+                              KioskMailer.receipt_email(charge).deliver
+                          end
+
+                          charge = {"email" => kiosk.user.email,"amount" => amount,"kiosk_name" => kiosk.title, "name" => name}
+                          KioskMailer.owner_email(charge).deliver
+                        end
+                        #is Rejected
+                      else
+                        @response = {"errors" => "Request Declined! "+response.setlstat}
+                      end
+
+
+                # if ! 1000
+              #  end
+
+                rescue Exception => msg
+                   @response = {"errors" => "Error in connection / Merchant id wrong"}
                 end
 
-
-          # if ! 1000
-        #  end
-
-          rescue Exception => msg
-             @response = {"errors" => "Error in connection / Merchant id wrong"}
-          end
-
-        #respstat is not 'A'
-      else
-        @response = {"errors" => "Request Declined! "+response.errors.join(",")}
+              #respstat is not 'A'
+            else
+              @response = {"errors" => "Request Declined! "+response.errors.join(",")}
+              end
+        #amount is not < '0'
         end
-
 
        rescue Exception => msg
            @response = {"errors" => "Error in connection / Merchant id wrong"}

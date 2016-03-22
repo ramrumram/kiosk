@@ -30,15 +30,33 @@
 				},
             onTabShow: function(tab, navigation, index) {
 
+
               $valid = true
+
               //form validtion
+              if (index == 1  ) {
+
+
+               $amt = parseFloat($(".custom-input input").val())
+
+
+               if($amt == 0 || isNaN($amt) || $amt < 0) {
+                   $('#rootwizard').bootstrapWizard('show',0);
+
+               }
+
+
+
+             }
               if (index == 2  ) {
+
                 $cust_name = $(".cust_name").val()
                 $cvc = $("#cvc").val()
                 $number = $("#number").val()
 
 
                 if ($cvc == "" || $number == "" || $cust_name == "" ) {
+
                     $(".payment-errors").html("Mandatory fields cannot be empty").removeClass("hide")
                       $('#rootwizard').bootstrapWizard('show',1);
                     $valid = false
